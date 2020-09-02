@@ -15,7 +15,7 @@ import { Database } from './database'
 export const app = new Koa<State, Context>()
 export const server = http.createServer(app.callback())
 
-const database = new Database(config.postgres.url, config.postgres.password)
+const database = new Database(config.postgres)
 const handler = new errors.Handler()
 
 const router = new Router<State, Context>()

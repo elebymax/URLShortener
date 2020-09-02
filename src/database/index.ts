@@ -1,14 +1,15 @@
 import postgres from 'postgres'
 import { KoaContext } from '../context'
 import * as migrations from '../migrations'
+import { Connection } from '../config/postgres'
 
 export class Database {
   public sql: postgres.Sql<never>
   public ready: Promise<boolean>
 
-  constructor(url: string, password: string) {
-    this.sql = postgres(url, {
-      password: password,
+  constructor(connection: Connection) {
+    this.sql = postgres('postgres://', {
+      ...connection,
       debug: (connection, query, parameters) => {
         console.log(query, parameters)
       },
