@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: 'URLShortener'
+  version: 1.0.0
+  description: The project repo is in [Github]()
+paths:
+  /urls:
+    post:
+      summary: 'Create new url'
+      tags:
+        - URL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateURLRequest'
+      responses:
+        '201':
+          description: 'The url is been created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateURLResponse'
+components:
+  schemas:
+    URLPayload:
+      type: object
+      properties:
+        url:
+          type: string
+          example: 'https://google.com'
+        expiredAt:
+          type: string
+          format: date-time
+          example: '2020-12-12T02:02:02.000Z'
+      required:
+        - url
+    URLInfoInput:
+      allOf:
+        - type: object
+          properties:
+            hash:
+              type: string
+              example: 'a1b2c3d4'
+        - $ref: '#/components/schemas/URLPayload'
+      required:
+        - hash
+    URLInfoOutput:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            hash:
+              type: string
+              example: 'a1b2c3d4'
+            createdAt:
+              type: string
+              format: date-time
+              example: '2020-12-12T02:02:02.000Z'
+            deletedAt:
+              type: string
+              format: date-time
+              example: '2020-12-12T02:02:02.000Z'
+        - $ref: '#/components/schemas/URLPayload'
+    CreateURLInput:
+      $ref: '#/components/schemas/URLPayload'
+    CreateURLOutput:
+      allOf:
+        - type: object
+          properties:
+            hash:
+              type: string
+              example: 'a1b2c3d4'
+        - $ref: '#/components/schemas/URLPayload'
+    CreateURLRequest:
+      $ref: '#/components/schemas/CreateURLInput'
+    CreateURLResponse:
+      $ref: '#/components/schemas/CreateURLOutput'

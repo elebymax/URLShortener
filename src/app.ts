@@ -6,7 +6,9 @@ import http from 'http'
 
 import * as config from './config'
 import * as errors from './errors'
+import * as route from './route'
 import * as health from './health'
+import * as url from './url'
 import { State, Context } from './context'
 import { Database } from './database'
 
@@ -17,7 +19,9 @@ const database = new Database(config.postgres.url, config.postgres.password)
 const handler = new errors.Handler()
 
 const router = new Router<State, Context>()
+router.use('', route.router.routes())
 router.use('/healthz', health.router.routes())
+router.use('/urls', url.router.routes())
 
 app.use(
   Cors({
