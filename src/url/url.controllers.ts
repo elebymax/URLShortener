@@ -1,5 +1,6 @@
 import { KoaContext } from '../context'
 import * as services from './url.services'
+import * as record from '../record'
 
 export const create = async (ctx: KoaContext): Promise<void> => {
   const info = await services.create(ctx, ctx.request.body)
@@ -9,9 +10,13 @@ export const create = async (ctx: KoaContext): Promise<void> => {
 }
 
 export const redirect = async (ctx: KoaContext): Promise<void> => {
-  console.log(ctx.params.hash)
-  const hash: string = await services.findURL(ctx, ctx.params.hash)
+  const info = await services.findURL(ctx, ctx.params.hash)
+
+  await record.services.create(ctx, {
+    ip: ctx.ip,
+    urlId: info.id,
+  })
 
   ctx.status = 302
-  ctx.redirect(hash)
+  ctx.redirect(info.url)
 }

@@ -23,6 +23,7 @@ router.use('', route.router.routes())
 router.use('/healthz', health.router.routes())
 router.use('/urls', url.router.routes())
 
+app.proxy = true
 app.use(
   Cors({
     origin: () => {

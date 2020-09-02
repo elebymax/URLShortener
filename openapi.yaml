@@ -4,6 +4,31 @@ info:
   version: 1.0.0
   description: The project repo is in [Github]()
 paths:
+  /{hash}:
+    get:
+      summary: 'Redirect to url'
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 'a1b2c3d4'
+      responses:
+        '302':
+          description: "Redirect"
+        '404':
+          description: "URL not found"
+          content:
+            application/json:
+              schema:
+                properties:
+                  code:
+                    type: string
+                    example: ''
+                  message:
+                    type: string
+                    example: 'URL not found'
   /urls:
     post:
       summary: 'Create new url'
@@ -74,7 +99,42 @@ components:
               type: string
               example: 'a1b2c3d4'
         - $ref: '#/components/schemas/URLPayload'
+    FindURLOutput:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            hash:
+              type: string
+              example: 'a1b2c3d4'
+        - $ref: '#/components/schemas/URLPayload'
     CreateURLRequest:
       $ref: '#/components/schemas/CreateURLInput'
     CreateURLResponse:
       $ref: '#/components/schemas/CreateURLOutput'
+    RecordPayload:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+    RecordInfoInput:
+      $ref: '#/components/schemas/RecordPayload'
+    RecordInfoOutput:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            createdAt:
+              type: string
+              format: date-time
+              example: '2020-12-12T02:02:02.000Z'
+        - $ref: '#/components/schemas/RecordPayload'
+    CreateRecordInput:
+      $ref: '#/components/schemas/RecordInfoInput'
+    CreateRecordOutput:
+      $ref: '#/components/schemas/RecordInfoOutput'

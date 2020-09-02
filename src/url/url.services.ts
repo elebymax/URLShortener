@@ -11,6 +11,11 @@ export interface CreateURLOutput extends model.URLPayload {
   hash: string
 }
 
+export interface FindURLOutput extends model.URLPayload {
+  id: number
+  hash: string
+}
+
 export const create = async (ctx: Context, info: CreateURLInput): Promise<CreateURLOutput> => {
   let hash
   do {
@@ -29,7 +34,7 @@ export const create = async (ctx: Context, info: CreateURLInput): Promise<Create
   }
 }
 
-export const findURL = async (ctx: Context, hash: string): Promise<string> => {
+export const findURL = async (ctx: Context, hash: string): Promise<FindURLOutput> => {
   const urlInfoOutputs: URLInfoOutput[] = (await model.findByHash(ctx, hash)).filter((u: URLInfoOutput) => {
     return !u.expiredAt || isAfter(parseISO(u.expiredAt), new Date())
   })
@@ -39,7 +44,12 @@ export const findURL = async (ctx: Context, hash: string): Promise<string> => {
     throw new APIError(404, { code: '', message: 'URL not found' })
   }
 
-  return payload.url
+  return {
+    id: payload.id,
+    url: payload.url,
+    hash: payload.hash,
+    expiredAt: payload.expiredAt,
+  }
 }
 
 const generateHash = (size: number): string => {
