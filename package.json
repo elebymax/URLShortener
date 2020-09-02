@@ -24,6 +24,7 @@
     "lodash": "^4.17.20",
     "postgres": "^1.0.2",
     "snakecase-keys": "^3.2.0",
+    "tslib": "^2.0.1",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
