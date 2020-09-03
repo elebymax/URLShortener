@@ -1,0 +1,19 @@
+runtime: nodejs
+env: flex
+
+env_variables:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: "password"
+  POSTGRES_DATABASE:  url_shortener
+  POSTGRES_HOST: "instance-name"
+  POSTGRES_PATH: /cloudsql
+  SERVER_PORT: 8080
+  API_KEY:
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+beta_settings:
+  cloud_sql_instances: "instance-name"
