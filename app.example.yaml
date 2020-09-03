@@ -5,8 +5,7 @@ env_variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: "password"
   POSTGRES_DATABASE: url_shortener
-  POSTGRES_HOST: "instance-name"
-  POSTGRES_PATH: /cloudsql
+  POSTGRES_HOST: "/cloudsql/instance-name"
   SERVER_PORT: 8080
   SERVER_DOMAIN: https://shenlearn.cc
   API_KEY:
