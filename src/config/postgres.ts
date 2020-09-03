@@ -14,5 +14,5 @@ export const postgres = {
   password: process.env.POSTGRES_PASSWORD || '',
   database: process.env.POSTGRES_DATABASE || 'url_shortener',
   host: process.env.POSTGRES_HOST || 'localhost',
-  path: process.env.NODE_ENV === 'production' ? '/cloudsql/' : '',
+  path: process.env.NODE_ENV === 'production' ? process.env.POSTGRES_PATH : '',
 }

@@ -10,9 +10,6 @@ export class Database {
   constructor(connection: Connection) {
     this.sql = postgres('postgres://', {
       ...connection,
-      debug: (connection, query, parameters) => {
-        console.log(query, parameters)
-      },
     })
     this.ready = this.initialize()
   }
